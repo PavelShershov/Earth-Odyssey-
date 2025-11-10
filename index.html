@@ -1,0 +1,1076 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <style>
+      #notification {
+        display: none; 
+        position: fixed; 
+        top: 20px; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        background: rgba(0,0,0,0.8); 
+        color: white; 
+        padding: 15px 25px; 
+        border-radius: 8px; 
+        z-index: 10000;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        border: 2px solid #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        transition: background-color 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Добавляем элемент для уведомлений -->
+    <div id="notification"></div>
+
+    <a-scene cursor="rayOrigin: mouse" id="main-scene">
+      <a-assets>
+        <a-asset-item id="model" src="UFO.gltf"></a-asset-item>
+        <a-asset-item id="dog" src="UFO-dog.gltf"></a-asset-item>
+        <a-asset-item id="table" src="table.gltf"></a-asset-item>
+        <a-asset-item id="tree100000" src="tree666.gltf"></a-asset-item>			
+        <a-asset-item id="tree200000" src="tree400.gltf"></a-asset-item>	
+        <a-asset-item id="pc3" src="pc3.gltf"></a-asset-item>
+        <a-asset-item id="Charon33" src="Charon33.gltf"></a-asset-item>
+        <a-asset-item id="keyboard" src="keyboard.gltf"></a-asset-item>
+        <a-asset-item id="gun" src="UFO-gun.gltf"></a-asset-item>
+        <a-asset-item id="ball" src="scene.gltf"></a-asset-item>
+        <!-- Добавляем модели круассанов и новые модели -->
+        <a-asset-item id="cruaso" src="sombra.gltf"></a-asset-item>
+        <a-asset-item id="valena" src="valena.gltf"></a-asset-item>
+        <a-asset-item id="cruasossss" src="cruasossss.gltf"></a-asset-item>
+        <a-asset-item id="felx" src="felx.gltf"></a-asset-item>
+        <a-asset-item id="tralala" src="tralala.gltf"></a-asset-item>
+        <!-- Добавляем новые модели -->
+        <a-asset-item id="greek" src="greek.gltf"></a-asset-item>
+        <a-asset-item id="slowar" src="slowar.gltf"></a-asset-item>
+        <!-- Заменяем selekat на selekaka -->
+        <a-asset-item id="selekaka" src="selekaka.gltf"></a-asset-item>
+        <!-- Добавляем модель Земли -->
+        <a-asset-item id="earth" src="earth.gltf"></a-asset-item>
+
+        <!-- Добавляем текстуры в assets -->
+        <img id="sky-texture-1" src="brazzzaaa.jpg">
+        <img id="sky-texture-2" src="maxamooo.jpg">
+        <img id="sky-texture-3" src="krussa.jpg">
+        <img id="sky-texture-4" src="frer.jpg">
+        <img id="sky-texture-5" src="vida.jpg">
+        <img id="sky-texture-6" src="loloaa.jpg">
+        <!-- Добавляем три новые текстуры -->
+        <img id="sky-texture-7" src="lososs.jpg">
+        <img id="sky-texture-8" src="sasas.jpg">
+        <img id="sky-texture-9" src="shhhhi.jpg">
+        
+        <!-- Заменяем видео на фото -->
+        <img id="intro-image" src="videoframe_2127.png">
+        
+        <!-- Добавляем музыку -->
+        <audio id="background-music-intro" src="Planetoid Pioneers - 18 Stargazer.mp3" preload="auto"></audio>
+        <audio id="background-music-game" src="Zombie Smashers X2 - Interweb.mp3" preload="auto"></audio>
+      </a-assets>
+
+      <!-- Таблички с названиями стран (изначально без текста) -->
+      <a-entity id="board-0" class="clickable-board inactive-board" position="-0.467 1.45 -1.45" rotation="0 17 0">
+        <a-plane color="#1D1E2C" width="0.28" height="0.35"></a-plane>
+        <a-text value="" align="center" color="white" 
+                position="0 0 0.01" width="2.0" scale="0.5 0.5 0.5">
+        </a-text>
+      </a-entity>
+	  
+      <a-entity id="board-1" class="clickable-board inactive-board" position="-0.750 1.45 -1.33" rotation="0 28 0">
+        <a-plane color="#1D1E2C" width="0.27" height="0.35"></a-plane>
+        <a-text value="" align="center" color="white" 
+                position="0 0 0.01" width="2.0" scale="0.5 0.5 0.5">
+		</a-text>
+      </a-entity>
+
+      <a-entity id="board-2" class="clickable-board inactive-board" position="0.467 1.45 -1.45" rotation="0 -17 0">
+        <a-plane color="#1D1E2C" width="0.28" height="0.35"></a-plane>
+        <a-text value="" align="center" color="white" 
+                position="0 0 0.01" width="2.0" scale="0.5 0.5 0.5">
+        </a-text>
+      </a-entity>
+
+      <a-entity id="board-3" class="clickable-board inactive-board" position="0.750 1.45 -1.33" rotation="0 -28 0">
+        <a-plane color="#1D1E2C" width="0.27" height="0.35"></a-plane>
+        <a-text value="" align="center" color="white" 
+                position="0 0 0.01" width="2.0" scale="0.5 0.5 0.5">
+        </a-text>
+      </a-entity>
+
+      <!-- Большая табличка с вопросом (изначально "Visit Earth?") -->
+      <a-entity id="question-board" class="clickable-question-board" position="0 1.45 -1.424" rotation="0 0 0">
+        <a-plane color="#C9431D" width="0.52" height="0.238"></a-plane>
+        <a-text value="Visit Earth?" align="center" color="white" 
+                position="0 0 0.01" width="2.0" scale="0.5 0.5 0.5">
+        </a-text>
+      </a-entity>
+
+      <!-- Модели для викторины - все скрыты изначально -->
+      <a-entity id="ball-object" 
+                gltf-model="#ball" 
+                position="0 1.5 0" 
+                scale="8 8 8" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <a-entity id="cruaso-object" 
+                gltf-model="#cruaso" 
+                position="0 1.55 0" 
+                scale="7 7 7" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <a-entity id="valena-object" 
+                gltf-model="#valena" 
+                position="0 1.5 0" 
+                scale="7 7 7" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <a-entity id="cruasossss-object" 
+                gltf-model="#cruasossss" 
+                position="0 1.4 0" 
+                scale="6 6 6" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <a-entity id="felx-object" 
+                gltf-model="#felx" 
+                position="0 1.46 0" 
+                scale="7 7 7" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <a-entity id="tralala-object" 
+                gltf-model="#tralala" 
+                position="0 1.46 0" 
+                scale="6 6 6" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <a-entity id="greek-object" 
+                gltf-model="#greek" 
+                position="0 1.45 0" 
+                scale="3 3 3" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <a-entity id="slowar-object" 
+                gltf-model="#slowar" 
+                position="0 1.4 0" 
+                scale="6 6 6" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <!-- Заменяем selekat-object на selekaka-object -->
+      <a-entity id="selekaka-object" 
+                gltf-model="#selekaka" 
+                position="0 1.4 0" 
+                scale="7 7 7" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                visible="false">
+      </a-entity>
+
+      <!-- Модель Земли в начальной сцене -->
+      <a-entity id="earth-object" 
+                gltf-model="#earth" 
+                position="0 1.55 0" 
+                scale="2.5 2.5 2.5" 
+                rotation="0 -90 0" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
+      </a-entity>
+
+      <!-- Остальные модели -->
+      <a-entity gltf-model="#model" position="0 1.9 0" scale="1 1 1" rotation="0 -90 0" ></a-entity>
+      
+      <!-- Собака с улучшенной анимацией прыжка и слежением за игроком -->
+      <a-entity id="dog-object"
+                class="clickable-dog" 
+                gltf-model="#dog" 
+                position="0 1.9 0" 
+                scale="1 1 1" 
+                rotation="0 -90 0"
+                look-at="[camera]">
+      </a-entity>
+      
+      <a-entity gltf-model="#table" position="0 1.9 0" scale="1 1 1" rotation="0 -90 0" ></a-entity>
+      <a-entity class="clickable-tree666" gltf-model="#tree100000" position="-0.91 1.4 0.82" scale="0.8 0.8 0.8" rotation="0 -90 0"></a-entity>		  
+      <a-entity gltf-model="#tree200000" position="-0.98 1.41 0.80" scale="1 1 1" rotation="0 -90 0" ></a-entity>	  
+      <a-entity class="obstacle" gltf-model="#gun" position="0 1.9 0" scale="1 1 1" rotation="0 -90 0" collision-sphere="radius: 0.25; debug: false" ></a-entity>
+      <a-entity gltf-model="#pc3" position="0 1.9 0" scale="1 1 1" rotation="0 -90 0" ></a-entity>
+      
+      <!-- Стул с отдельным классом для вращения и бесконечной анимацией поднятия/опускания -->
+      <a-entity class="obstacle clickable-Charon33" 
+                id="Charon33-object"
+                gltf-model="#Charon33" 
+                position="1 1.3 -0.6" 
+                scale="0.8 0.8 0.8" 
+                rotation="0 0 0" 
+                collision-box="width: 0.25; height: 2; depth: 0.25; debug: false"
+                animation="property: position; to: 1 1.38 -0.6; dir: alternate; dur: 3000; loop: true; easing: easeInOutQuad">
+      </a-entity>
+      
+      <!-- Клавиатура с классом clickable для смены неба и объектов -->
+      <a-entity gltf-model="#keyboard" class="clickable-keyboard" position="0 1.9 0" scale="1 1 1" rotation="0 -90 0"></a-entity>
+
+      <!-- Фоновая музыка -->
+      <a-entity id="music-player-intro" sound="src: #background-music-intro; autoplay: false; loop: true; volume: 0.5"></a-entity>
+      <a-entity id="music-player-game" sound="src: #background-music-game; autoplay: false; loop: true; volume: 0.5"></a-entity>
+
+      <a-light type="point" position="0 2.75 0" intensity="20" color="blue"></a-light>
+      <a-box position="0 2.75 0" rotation="45 45 45" scale="0.25 0.25 0.25" color="blue"></a-box>
+      <a-light type="ambient" color="white" intensity="2"></a-light>
+
+      <!-- Камера с оригинальными настройками и улучшенным курсором -->
+      <a-entity camera
+                rayOrigin="mouse"
+                id="player"
+                position="1 1.7 0"
+                wasd-controls="acceleration:10"
+                look-controls
+                player-collision="targets: .obstacle; radius: 0.2; showCollider: false"
+                movement="speed: 0.1">
+        <!-- Улучшенный курсор - невидимый и большой -->
+        <a-entity cursor="rayOrigin: mouse"
+                  raycaster="objects: .clickable-keyboard, .clickable-Charon33, .clickable-dog, .clickable-board, .clickable-tree666, .clickable-question-board"
+                  geometry="primitive: ring; radiusInner: 0.0001; radiusOuter: 1000"
+                  material="color: black; shader: flat; transparent: true; opacity: 0"
+                  position="0 0 -1">
+        </a-entity>
+      </a-entity>
+      
+      <!-- Невидимые препятствия -->
+      <a-box class="obstacle" position="3 1.5 0" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+      <a-box class="obstacle" position="1.9 1.5 -1.9" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+      <a-box class="obstacle" position="0 1.5 -2.8" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+      <a-box class="obstacle" position="-1.9 1.5 -1.9" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+      <a-box class="obstacle" position="-3 1.5 0" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+      <a-box class="obstacle" position="-1.8 1.5 2" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+      <a-box class="obstacle" position="0 1.5 2.8" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+      <a-box class="obstacle" position="2 1.5 2" color="blue" width="0.2" height="0.2" depth="0.2" visible="false" collision-sphere="radius: 1.5; debug: false"></a-box>
+
+      <!-- Небо с фото для начальной сцены -->
+      <a-sky id="sky" src="#intro-image"></a-sky>  
+      
+    </a-scene>
+    
+    <script>
+// Данные для викторины (9 раундов)
+const quizData = [
+  { // Раунд 1
+    question: "22.951916°S\n43.2104872°W",
+    answers: ["Sri Lanka", "Brazil", "Ecuador", "Portugal"],
+    correctAnswer: 1, // Brazil
+    hintObject: "ball-object"
+  },
+  { // Раунд 2
+    question: "19.395°N\n98.7080556°W",
+    answers: ["Malaysia", "Macedonia", "Thailand", "Mexico"],
+    correctAnswer: 3, // Mexico
+    hintObject: "cruaso-object"
+  },
+  { // Раунд 3
+    question: "61.52401°N\n105.318756°E",
+    answers: ["Belarus", "Finland", "Russia", "UK"],
+    correctAnswer: 2, // Russia
+    hintObject: "valena-object"
+  },
+  { // Раунд 4
+    question: "48.87407°N\n2.2379067°E",
+    answers: ["Belgium", "France", "Croatia", "Switzerland"],
+    correctAnswer: 1, // France
+    hintObject: "cruasossss-object"
+  },
+  { // Раунд 5
+    question: "35.3606255°N\n138.7273634°E",
+    answers: ["China", "Nepal", "Switzerland", "Japan"],
+    correctAnswer: 3, // Japan
+    hintObject: "felx-object"
+  },
+  { // Раунд 6
+    question: "51.5072178°N\n0.1275862°W",
+    answers: ["UK", "Denmark", "India", "Bulgaria"],
+    correctAnswer: 0, // United Kingdom
+    hintObject: "tralala-object"
+  },
+  { // Раунд 7
+    question: "34.0549076°N\n118.242643°W",
+    answers: ["Canada", "Saudi Arabia", "America", "New Zealand"],
+    correctAnswer: 2, // America
+    hintObject: "greek-object"
+  },
+  { // Раунд 8
+    question: "50.937531°N\n6.9602786°E",
+    answers: ["Poland", "Germany", "Ireland", "Austria"],
+    correctAnswer: 1, // Germany
+    hintObject: "slowar-object"
+  },
+  { // Раунд 9
+    question: "39.904211°N\n116.407395°E",
+    answers: ["China", "Cambodia", "Indonesia", "South Korea"],
+    correctAnswer: 0, // China
+    hintObject: "selekaka-object" // Заменяем здесь
+  }
+];
+
+// Ссылки для каждой локации
+const locationLinks = [
+  "https://earth.google.com/web/@50.28713628,63.8618245,-15776.39103664a,21820411.22864485d,35y,307.70138688h,0t,0r/data=CgRCAggBOgMKATBCAggASg0I____________ARAA", // Начальная сцена
+  "https://www.google.de/maps/place/%D0%A1%D1%82%D0%B0%D1%82%D1%83%D1%8F+%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%B0-%D0%98%D1%81%D0%BA%D1%83%D0%BF%D0%B8%D1%82%D0%B5%D0%BB%D1%8F/@-22.951795,-43.2095583,3a,90y,285.66h,69.27t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgIDuqf2NpQE!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c8TVmkH5t0LYaNN7x49_dYqFVeLMTCmCJOWicy6uhf815eieB4cRj6D3u69UcxesPceYZ86LU-zzyZV46hruG4ydK4PLdhOhmUzBJXzSshQ5DXNs6BxlwDS1ZXiKMMq-4HQqtH-4A%3Dw900-h600-k-no-pi20.732915163824075-ya285.65862848388076-ro0-fo100!7i8192!8i4096!4m16!1m8!3m7!1s0x997fd5984aa13f:0x9dc984d7019502de!2z0KHRgtCw0YLRg9GPINCl0YDQuNGB0YLQsC3QmNGB0LrRg9C_0LjRgtC10LvRjw!8m2!3d-22.951916!4d-43.2104872!10e5!16zL20vMDNneXR3!3m6!1s0x997fd5984aa13f:0x9dc984d7019502de!8m2!3d-22.951916!4d-43.2104872!10e5!16zL20vMDNneXR3?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 1
+  "https://www.google.de/maps/place/%D0%9C%D0%BE%D0%BD%D1%82%D0%B5+%D0%A2%D0%BB%D0%B0%D0%BB%D0%BE%D0%BA/@19.6944447,-99.3055573,3a,53.5y,9.42h,75.92t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgICExu3b_AE!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c8K_50-5hgBgtVfABlCTFvFw4L831D3RkQ5DafJwXm-IXRtRrCxhcCjKwK361loE7YcOLWsbx9EvZvlrBt3bKS4O_ftUX1MxIDVG3NuSN_MXTwcdZCNh8z25Bo257DlUQ3xgaX3bQ%3Dw900-h600-k-no-pi14.077150592577581-ya9.417666667232353-ro0-fo100!7i8192!8i4096!4m17!1m9!3m8!1s0x85d1ff3baf3367df:0x4d80b196ca91535e!2zR3VhbmFqdWF0bywgUm9tYSBOdGUuLCAwNjcwMCBDaXVkYWQgZGUgTcOpeGljbywgQ0RNWCwg0JzQtdC60YHQuNC60LA!3b1!8m2!3d19.4168211!4d-99.1596475!10e5!16s%2Fg%2F1v5_9sfq!3m6!1s0x85d1d8f7672c11a5:0x1f6fd94202bd0185!8m2!3d19.395!4d-98.7080556!10e5!16s%2Fm%2F03wfm9k?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 2
+  "https://www.google.de/maps/place/%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F/@59.9480553,30.3202781,3a,69.5y,74.5h,65.85t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgID4-9-O2AE!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c_UKZrG5xtRv1OmQDKHn0Yq44hn4X3S0UWBlHQxcASk9p3kWlY8AG_VDIQpvlp3z5lMEmi77E7upvZmcjsT1fyYSGy1UljOWoC50vSr5DfHRhS6_ABkxFikWcsUpILf7eK7zlbP%3Dw900-h600-k-no-pi24.150000000000006-ya74.5-ro0-fo100!7i8192!8i4096!4m7!3m6!1s0x453c569a896724fb:0x1409fdf86611f613!8m2!3d61.52401!4d105.318756!10e5!16zL20vMDZibno?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 3
+  "https://www.google.de/maps/@48.87407,2.2379067,3a,73y,214.88h,71.04t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgICusuevAg!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c_5awHKpY7lBUDfeSFNI0oz3NVHojm1WzI5gteY-RGMeuFKGCOk6L1SD_EHHykmr7XPcF85Vgqk2E-z-7Y4ueh5uKvR_RBNjyMVHAqwRNWgmV_e74-LzJLfubRoI5ZJkH9y50Mt%3Dw900-h600-k-no-pi18.956705596757942-ya214.88120736295855-ro0-fo100!7i8192!8i4096?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 4
+  "https://www.google.de/maps/place/%D0%A4%D1%83%D0%B4%D0%B7%D0%B8%D1%8F%D0%BC%D0%B0/@35.4185515,138.8774803,3a,75y,2.01h,95.31t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgICRnuiGGQ!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c-EHva__aNZcgb49JKWgqV2sVlZRnKXkaX4q2Z8sxj0t2gcvJPJTegb52k9cU8Tv8YVCQfx_B3wKsVf_H0bTGZ0_AdOVNMDh7IT5Rad-6COdrbGMcpMC_-GI6XE8gS-P3ab79TT%3Dw900-h600-k-no-pi-5.308208681039332-ya2.0051765961363976-ro0-fo100!7i8192!8i4096!4m7!3m6!1s0x6019629a42fdc899:0xa6a1fcc916f3a4df!8m2!3d35.3606255!4d138.7273634!10e5!16zL20vMGNrczA?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 5
+  "https://www.google.de/maps/place/%D0%9B%D0%BE%D0%BD%D0%B4%D0%BE%D0%BD,+%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%BE%D0%B1%D1%80%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D1%8F/@51.4983917,-0.0047889,3a,48.3y,75.16h,77.76t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgICu3t7hYA!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c82hG-hv3vdieMBdHnaw5doDlTuhc_wJ9EjS5KZcTR7Uz6sqK6g2lCL5Tk2S_d-zYvoZY-pfvMIvU7zCkW7EWT3qA2hKzwc4iLuecwPohUoBeXsoeAu7swW8oZzUAeIQDLBB7QI%3Dw900-h600-k-no-pi12.235108032524792-ya75.16450288201187-ro0-fo100!7i14400!8i7200!4m7!3m6!1s0x47d8a00baf21de75:0x52963a5addd52a99!8m2!3d51.5072178!4d-0.1275862!10e5!16zL20vMDRqcGw!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 6
+  "https://www.google.de/maps/place/%D0%9B%D0%BE%D1%81-%D0%90%D0%BD%D0%B4%D0%B6%D0%B5%D0%BB%D0%B5%D1%81,+%D0%9A%D0%B0%D0%BB%D0%B8%D1%84%D0%BE%D1%80%D0%BD%D0%B8%D1%8F,+%D0%A1%D0%A8%D0%90/@33.7382094,-118.3917547,3a,75y,328.15h,68.9t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgIC28IGk5QE!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c_c9_RQO4MvDnite6In_9JuIzrpmQVa-ROTDiJTorGcAvO3Iwpq8f_uT-JQOAQGvWt9evgTwESkELEDUh8aKYFADqr6tlIEfwnFMkqPCQmBeDtK_x0DVcCvtqd6oxazhw6IawAz9w%3Dw900-h600-k-no-pi21.099999999999994-ya328.15-ro0-fo100!7i8192!8i4096!4m7!3m6!1s0x80c2c75ddc27da13:0xe22fdf6f254608f4!8m2!3d34.0549076!4d-118.242643!10e5!16s%2Fm%2F030qb3t!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 7
+  "https://www.google.de/maps/place/%D0%9A%D1%91%D0%BB%D1%8C%D0%BD,+%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D1%8F/@50.9487788,6.9664103,3a,90y,73.36h,74.73t/data=!3m8!1e1!3m6!1sCIABIhA09LggHTdSYBSIu_GH4-Xw!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c_I65batFxWUz4wdvARUDyhiGwl3h7YkmKGhqw2j65b7y0OXv8b-dGS1d74GAMxMxoq_3uCzAmQowdSEUyPC8ztMrJNcIivdvgqL_RFjdMTL6r1Uc134yHdlbImIrtUFaBv2lgfr2Wt5J9t%3Dw900-h600-k-no-pi15.273053191307028-ya73.36306943594478-ro0-fo100!7i9000!8i4500!4m17!1m9!3m8!1s0x47a84e373f035901:0x42120465b5e3b70!2z0JHQtdGA0LvQuNC9LCDQk9C10YDQvNCw0L3QuNGP!3b1!8m2!3d52.5200066!4d13.404954!10e5!16zL20vMDE1NnE!3m6!1s0x47bf259169ab2fe5:0x42760fc4a2a77f0!8m2!3d50.937531!4d6.9602786!10e5!16zL20vMDF2OGM!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D", // Раунд 8
+  "https://www.google.de/maps/place/%D0%9F%D0%B5%D0%BA%D0%B8%D0%BD,+%D0%9A%D0%B8%D1%82%D0%B0%D0%B9/@39.1341515,117.0038071,3a,89y,45.59h,39.74t/data=!3m8!1e1!3m6!1sCIHM0ogKEICAgIDi-fSjyQE!2e10!3e11!6shttps:%2F%2Flh3.googleusercontent.com%2Fgpms-cs-s%2FAPRy3c8aNuAYeLV3hTfa3axl51aMQW7e_gK00fZxmA9YunliMJKKnWzwES1vuXeNfFZVSg6L1HGiuqYbiC0OLADx3G2SQ-VTN5rHoIMAz61ZvMk6mibe5O3vYdiD31yIHMeaEIad0gwCpg%3Dw900-h600-k-no-pi50.26-ya45.59-ro0-fo100!7i10000!8i5000!4m7!3m6!1s0x35f05296e7142cb9:0xb9625620af0fa98a!8m2!3d39.904211!4d116.407395!10e5!16zL20vMDE5MTQ!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D"  // Раунд 9
+];
+
+// Переменные для управления викториной
+let currentRound = 0;
+let hintShown = Array(9).fill(false); // Отслеживаем, была ли показана подсказка в каждом раунде
+let isQuizStarted = false; // Флаг, указывающий, началась ли викторина
+
+// Функция для переключения музыки
+function switchMusic(fromMusic, toMusic) {
+  // Останавливаем текущую музыку
+  if (fromMusic && fromMusic.components.sound) {
+    fromMusic.components.sound.stopSound();
+  }
+  
+  // Запускаем новую музыку
+  if (toMusic && toMusic.components.sound) {
+    toMusic.components.sound.playSound();
+  }
+}
+
+// Простой обработчик для запуска музыки по первому клику на сцену
+document.addEventListener('DOMContentLoaded', function() {
+  const scene = document.querySelector('#main-scene');
+  let musicStarted = false;
+  
+  const startMusic = function() {
+    if (musicStarted) return;
+    
+    const musicPlayerIntro = document.querySelector('#music-player-intro');
+    if (musicPlayerIntro && musicPlayerIntro.components.sound) {
+      musicPlayerIntro.components.sound.playSound();
+      musicStarted = true;
+      console.log('Музыка Planetoid Pioneers запущена!');
+      
+      scene.removeEventListener('click', startMusic);
+      document.removeEventListener('click', startMusic);
+    }
+  };
+  
+  scene.addEventListener('click', startMusic);
+  document.addEventListener('click', startMusic);
+});
+
+// Функция для показа уведомлений с разными цветами
+function showNotification(text, color) {
+  const notification = document.getElementById('notification');
+  notification.textContent = text;
+  notification.style.background = color;
+  notification.style.display = 'block';
+  
+  setTimeout(() => {
+    notification.style.display = 'none';
+  }, 2000);
+}
+
+// Функция для обновления викторины
+function updateQuiz() {
+  const roundData = quizData[currentRound];
+  
+  // Обновляем вопрос
+  const questionBoard = document.querySelector('#question-board a-text');
+  if (questionBoard) {
+    questionBoard.setAttribute('value', roundData.question);
+  }
+  
+  // Обновляем ответы
+  for (let i = 0; i < 4; i++) {
+    const board = document.querySelector(`#board-${i} a-text`);
+    if (board) {
+      board.setAttribute('value', roundData.answers[i]);
+    }
+  }
+}
+
+// Функция для смены модели и неба
+function changeModelAndSky() {
+  const sky = document.querySelector('#sky');
+  const objects = [
+    document.querySelector('#ball-object'),
+    document.querySelector('#cruaso-object'),
+    document.querySelector('#valena-object'),
+    document.querySelector('#cruasossss-object'),
+    document.querySelector('#felx-object'),
+    document.querySelector('#tralala-object'),
+    document.querySelector('#greek-object'),
+    document.querySelector('#slowar-object'),
+    document.querySelector('#selekaka-object') // Заменяем здесь
+  ];
+  
+  const skyTextures = [
+    '#sky-texture-1',
+    '#sky-texture-2',
+    '#sky-texture-3',
+    '#sky-texture-4',
+    '#sky-texture-5',
+    '#sky-texture-6',
+    '#sky-texture-7',
+    '#sky-texture-8',
+    '#sky-texture-9'
+  ];
+  
+  // Скрываем все объекты
+  objects.forEach(obj => {
+    if (obj) obj.setAttribute('visible', false);
+  });
+  
+  // Показываем текущий объект только если была показана подсказка
+  if (hintShown[currentRound]) {
+    const currentObject = objects[currentRound];
+    if (currentObject) {
+      currentObject.setAttribute('visible', true);
+    }
+  }
+  
+  // Устанавливаем текущую текстуру неба
+  if (skyTextures[currentRound]) {
+    sky.setAttribute('src', skyTextures[currentRound]);
+  }
+}
+
+// Функция для показа подсказки в текущем раунде
+function showHint() {
+  const roundData = quizData[currentRound];
+  const hintObject = document.querySelector(`#${roundData.hintObject}`);
+  
+  if (hintObject && !hintShown[currentRound]) {
+    hintShown[currentRound] = true;
+    hintObject.setAttribute('visible', true);
+    showNotification("Неа! Доступен местный образец!", "rgba(150, 0, 0, 0.8)");
+  }
+}
+
+// Функция для скрытия подсказки в текущем раунде
+function hideHint() {
+  const roundData = quizData[currentRound];
+  const hintObject = document.querySelector(`#${roundData.hintObject}`);
+  
+  if (hintObject) {
+    hintObject.setAttribute('visible', false);
+  }
+}
+
+// Функция для возврата в стартовую локацию
+function returnToStart() {
+  isQuizStarted = false;
+  currentRound = 0;
+  hintShown = Array(9).fill(false);
+  
+  // Возвращаем небо с фото
+  const sky = document.querySelector('#sky');
+  sky.setAttribute('src', '#intro-image');
+  
+  // Возвращаем табличку с "Visit Earth?"
+  const questionBoard = document.querySelector('#question-board a-text');
+  if (questionBoard) {
+    questionBoard.setAttribute('value', 'Visit Earth?');
+  }
+  
+  // Очищаем тексты на табличках и делаем их неактивными
+  for (let i = 0; i < 4; i++) {
+    const board = document.querySelector(`#board-${i}`);
+    const boardText = document.querySelector(`#board-${i} a-text`);
+    if (board) {
+      board.classList.add('inactive-board');
+    }
+    if (boardText) {
+      boardText.setAttribute('value', '');
+    }
+  }
+  
+  // Скрываем все объекты викторины
+  const objects = [
+    document.querySelector('#ball-object'),
+    document.querySelector('#cruaso-object'),
+    document.querySelector('#valena-object'),
+    document.querySelector('#cruasossss-object'),
+    document.querySelector('#felx-object'),
+    document.querySelector('#tralala-object'),
+    document.querySelector('#greek-object'),
+    document.querySelector('#slowar-object'),
+    document.querySelector('#selekaka-object') // Заменяем здесь
+  ];
+  
+  objects.forEach(obj => {
+    if (obj) obj.setAttribute('visible', false);
+  });
+  
+  // Показываем модель Земли
+  const earthObject = document.querySelector('#earth-object');
+  if (earthObject) {
+    earthObject.setAttribute('visible', true);
+  }
+  
+  // Переключаем музыку обратно на Planetoid Pioneers
+  const musicPlayerGame = document.querySelector('#music-player-game');
+  const musicPlayerIntro = document.querySelector('#music-player-intro');
+  switchMusic(musicPlayerGame, musicPlayerIntro);
+  
+  console.log('Возврат в стартовую локацию');
+}
+
+// Функция для начала викторины
+function startQuiz() {
+  if (isQuizStarted) return;
+  
+  isQuizStarted = true;
+  
+  // Скрываем модель Земли
+  const earthObject = document.querySelector('#earth-object');
+  if (earthObject) {
+    earthObject.setAttribute('visible', false);
+  }
+  
+  // Переключаем музыку на Zombie Smashers
+  const musicPlayerIntro = document.querySelector('#music-player-intro');
+  const musicPlayerGame = document.querySelector('#music-player-game');
+  switchMusic(musicPlayerIntro, musicPlayerGame);
+  
+  // Меняем небо на первую текстуру
+  const sky = document.querySelector('#sky');
+  sky.setAttribute('src', '#sky-texture-1');
+  
+  // Активируем таблички - убираем класс inactive-board
+  for (let i = 0; i < 4; i++) {
+    const board = document.querySelector(`#board-${i}`);
+    if (board) {
+      board.classList.remove('inactive-board');
+      console.log(`Табличка ${i} активирована`);
+    }
+  }
+  
+  // Инициализируем первый раунд
+  updateQuiz();
+  showNotification("Капитан, ахтунг! Где мы находимся?!", "rgba(0, 100, 200, 0.8)");
+}
+
+// Функция для открытия ссылки в новой вкладке
+function openLocationLink() {
+  let linkIndex;
+  
+  if (!isQuizStarted) {
+    // Начальная сцена
+    linkIndex = 0;
+  } else {
+    // Текущий раунд викторины
+    linkIndex = currentRound + 1;
+  }
+  
+  if (locationLinks[linkIndex]) {
+    window.open(locationLinks[linkIndex], '_blank');
+  }
+}
+
+// Обработчики для клавиатуры, стула, собаки и табличек
+document.querySelector('a-scene').addEventListener('loaded', function() {
+  const keyboard = document.querySelector('.clickable-keyboard');
+  const Charon33Object = document.querySelector('.clickable-Charon33');
+  const dogObject = document.querySelector('#dog-object');
+  const tree666 = document.querySelector('.clickable-tree666');
+  const questionBoard = document.querySelector('.clickable-question-board');
+  
+  // Обработчик для большой таблички с вопросом - открытие ссылки
+  if (questionBoard) {
+    questionBoard.addEventListener('click', function() {
+      openLocationLink();
+    });
+  }
+  
+  // Обработчик для клавиатуры - только начало викторины
+  if (keyboard) {
+    keyboard.addEventListener('click', function() {
+      if (!isQuizStarted) {
+        startQuiz();
+      }
+      // После начала викторины клавиатура больше ничего не делает
+    });
+  }
+  
+  if (tree666) {
+    tree666.addEventListener('click', function() {
+      // Получаем текущую позицию
+      const currentPosition = tree666.getAttribute('position');
+    
+      // Устанавливаем новую высоту (1.4) и сохраняем X и Z координаты
+      tree666.setAttribute('position', {
+        x: currentPosition.x,
+        y: 1.4,
+        z: currentPosition.z
+      });
+    
+      // Добавляем плавную анимацию увеличения
+      tree666.setAttribute('animation', {
+        property: 'scale',
+        to: '1.7 1.7 1.7',
+        dur: 1000,
+        easing: 'easeOutQuad'
+      });
+    });
+  }
+  
+  // Обработчики для табличек викторины
+  for (let i = 0; i < 4; i++) {
+    const board = document.querySelector(`#board-${i}`);
+    if (board) {
+      board.addEventListener('click', function() {
+        console.log(`Клик по табличке ${i}, isQuizStarted: ${isQuizStarted}`);
+        
+        // Если викторина еще не началась, игнорируем клики
+        if (!isQuizStarted) {
+          console.log("Викторина еще не начата, игнорируем клик");
+          return;
+        }
+        
+        const roundData = quizData[currentRound];
+        console.log(`Текущий раунд: ${currentRound}, правильный ответ: ${roundData.correctAnswer}`);
+        
+        if (i === roundData.correctAnswer) {
+          // Правильный ответ
+          console.log("Правильный ответ!");
+          // Скрываем подсказку текущего раунда
+          hideHint();
+          
+          if (currentRound === 8) {
+            // Последний раунд - особое сообщение и возврат к началу
+            showNotification("Вы прошли!", "rgba(0, 150, 0, 0.8)");
+            
+            // Возвращаем в стартовую локацию через 2 секунды
+            setTimeout(() => {
+              returnToStart();
+            }, 2000);
+            
+          } else {
+            showNotification("Верно!", "rgba(0, 150, 0, 0.8)");
+            currentRound++;
+          }
+          
+          // Меняем модель и небо
+          changeModelAndSky();
+          
+          // Обновляем вопросы и ответы
+          updateQuiz();
+        } else {
+          // Неправильный ответ
+          console.log("Неправильный ответ!");
+          if (!hintShown[currentRound]) {
+            // Первая ошибка в раунде - показываем подсказку
+            showHint();
+            // В последнем раунде также обновляем модель и небо, чтобы подсказка отобразилась
+            if (currentRound === 8) {
+              changeModelAndSky();
+            }
+          } else {
+            // Последующие ошибки - просто сообщение "Неверно!"
+            showNotification("Неверно!", "rgba(150, 0, 0, 0.8)");
+          }
+        }
+      });
+    }
+  }
+  
+  // Обработчик для стула - только вращение
+  if (Charon33Object) {
+    Charon33Object.addEventListener('click', function() {
+      const currentRotation = Charon33Object.getAttribute('rotation');
+      
+      Charon33Object.setAttribute('animation__rotate', {
+        property: 'rotation',
+        to: `${currentRotation.x} ${currentRotation.y + 360} ${currentRotation.z}`,
+        dur: 1000,
+        easing: 'easeInOutQuad'
+      });
+      
+      setTimeout(function() {
+        Charon33Object.setAttribute('rotation', {
+          x: currentRotation.x,
+          y: currentRotation.y + 360,
+          z: currentRotation.z
+        });
+        
+        Charon33Object.removeAttribute('animation__rotate');
+      }, 1000);
+    });
+  }
+  
+  // Обработчик для собаки - прыжок
+  if (dogObject) {
+    let isDogJumping = false;
+    
+    dogObject.addEventListener('click', function() {
+      if (isDogJumping) return;
+      
+      isDogJumping = true;
+      const originalPosition = dogObject.getAttribute('position');
+      
+      dogObject.setAttribute('animation__jump', {
+        property: 'position',
+        to: '0 2.4 0',
+        dur: 500,
+        dir: 'alternate',
+        loop: 2,
+        easing: 'easeInOutQuad'
+      });
+      
+      dogObject.addEventListener('animationcomplete', function onAnimationComplete(e) {
+        if (e.detail.name === 'animation__jump') {
+          dogObject.setAttribute('position', originalPosition);
+          dogObject.removeAttribute('animation__jump');
+          isDogJumping = false;
+          dogObject.removeEventListener('animationcomplete', onAnimationComplete);
+        }
+      });
+    });
+  }
+});
+
+// КОМПОНЕНТЫ КОЛЛИЗИЙ (исправленные)
+AFRAME.registerComponent('collision-box', {
+  schema: {
+    width: {type: 'number', default: 1},
+    height: {type: 'number', default: 1},
+    depth: {type: 'number', default: 1},
+    debug: {type: 'boolean', default: false}
+  },
+
+  init: function() {
+    if (this.data.debug) {
+      this.debugBox = document.createElement('a-box');
+      this.debugBox.setAttribute('width', this.data.width);
+      this.debugBox.setAttribute('height', this.data.height);
+      this.debugBox.setAttribute('depth', this.data.depth);
+      this.debugBox.setAttribute('color', 'rgba(255, 0, 0, 0.3)');
+      this.debugBox.setAttribute('wireframe', 'true');
+      this.el.appendChild(this.debugBox);
+    }
+  },
+
+  getBoundingBox: function() {
+    return {
+      type: 'box',
+      width: this.data.width,
+      height: this.data.height,
+      depth: this.data.depth
+    };
+  }
+});
+
+AFRAME.registerComponent('collision-sphere', {
+  schema: {
+    radius: {type: 'number', default: 1},
+    debug: {type: 'boolean', default: false}
+  },
+
+  init: function() {
+    if (this.data.debug) {
+      this.debugSphere = document.createElement('a-sphere');
+      this.debugSphere.setAttribute('radius', this.data.radius);
+      this.debugSphere.setAttribute('color', 'rgba(0, 255, 0, 0.3)');
+      this.debugSphere.setAttribute('wireframe', 'true');
+      this.el.appendChild(this.debugSphere);
+    }
+  },
+
+  getBoundingSphere: function() {
+    return {
+      type: 'sphere',
+      radius: this.data.radius
+    };
+  }
+});
+
+AFRAME.registerComponent('movement', {
+  schema: {
+    speed: {type: 'number', default: 0.1},
+    fixedHeight: {type: 'number', default: 1.6}
+  },
+
+  init: function() {
+    this.direction = new THREE.Vector3();
+    this.move = {
+      forward: false,
+      backward: false,
+      left: false,
+      right: false
+    };
+
+    this.el.object3D.position.y = this.data.fixedHeight;
+
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keyup', this.onKeyUp);
+  },
+
+  onKeyDown: function(event) {
+    switch(event.keyCode) {
+      case 87: this.move.forward = true; break;
+      case 83: this.move.backward = true; break;
+      case 65: this.move.left = true; break;
+      case 68: this.move.right = true; break;
+    }
+  },
+
+  onKeyUp: function(event) {
+    switch(event.keyCode) {
+      case 87: this.move.forward = false; break;
+      case 83: this.move.backward = false; break;
+      case 65: this.move.left = false; break;
+      case 68: this.move.right = false; break;
+    }
+  },
+
+  tick: function() {
+    const el = this.el;
+    const currentPosition = el.object3D.position.clone();
+    
+    const camera = el.querySelector('[camera]');
+    const cameraDirection = new THREE.Vector3();
+    if (camera) {
+      camera.object3D.getWorldDirection(cameraDirection);
+      cameraDirection.y = 0;
+      cameraDirection.normalize();
+    }
+
+    const moveVector = new THREE.Vector3();
+    const rightVector = new THREE.Vector3();
+    
+    if (camera) {
+      rightVector.crossVectors(cameraDirection, new THREE.Vector3(0, 1, 0));
+    }
+
+    if (this.move.forward) moveVector.add(cameraDirection);
+    if (this.move.backward) moveVector.sub(cameraDirection);
+    if (this.move.left) moveVector.sub(rightVector);
+    if (this.move.right) moveVector.add(rightVector);
+
+    if (moveVector.length() > 0) {
+      moveVector.normalize().multiplyScalar(this.data.speed);
+      
+      el.object3D.position.x += moveVector.x;
+      el.object3D.position.z += moveVector.z;
+      
+      el.object3D.position.y = this.data.fixedHeight;
+    }
+
+    this.lastPosition = currentPosition;
+  },
+
+  remove: function() {
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keyup', this.onKeyUp);
+  }
+});
+
+AFRAME.registerComponent('player-collision', {
+  schema: {
+    targets: {type: 'selectorAll'},
+    radius: {type: 'number', default: 0.5},
+    force: {type: 'number', default: 0.5},
+    fixedHeight: {type: 'number', default: 1.6},
+    showCollider: {type: 'boolean', default: false}
+  },
+
+  init: function() {
+    this.collisions = new Map();
+    this.velocity = new THREE.Vector3();
+    this.isColliding = false;
+    
+    if (this.data.showCollider) {
+      this.createColliderVisualizer();
+    }
+  },
+
+  update: function() {
+    if (this.visualizer) {
+      this.el.removeChild(this.visualizer);
+      this.visualizer = null;
+    }
+    
+    if (this.data.showCollider) {
+      this.createColliderVisualizer();
+    }
+  },
+
+  createColliderVisualizer: function() {
+    this.visualizer = document.createElement('a-cylinder');
+    this.visualizer.setAttribute('radius', this.data.radius);
+    this.visualizer.setAttribute('height', 0.1);
+    this.visualizer.setAttribute('color', 'rgba(0, 0, 255, 0.3)');
+    this.visualizer.setAttribute('opacity', 0.5);
+    this.visualizer.setAttribute('position', '0 0.05 0');
+    this.el.appendChild(this.visualizer);
+  },
+
+  tick: function() {
+    const playerPos = this.el.object3D.position;
+    const targets = this.data.targets;
+    let collisionOccurred = false;
+
+    this.velocity.set(0, 0, 0);
+
+    targets.forEach(target => {
+      const targetPos = target.object3D.position;
+      
+      if (this.checkCollision(playerPos, target)) {
+        collisionOccurred = true;
+        
+        const pushDirection = new THREE.Vector3()
+          .subVectors(playerPos, targetPos)
+          .normalize();
+        
+        pushDirection.y = 0;
+        
+        if (pushDirection.length() > 0) {
+          pushDirection.normalize();
+        }
+
+        const pushForce = this.data.force;
+        this.velocity.add(pushDirection.multiplyScalar(pushForce));
+
+        if (!this.collisions.has(target)) {
+          this.collisions.set(target, true);
+          this.onCollisionStart(target);
+        }
+      } else {
+        if (this.collisions.has(target)) {
+          this.collisions.delete(target);
+          this.onCollisionEnd(target);
+        }
+      }
+    });
+
+    if (collisionOccurred) {
+      this.applyCollisionForce();
+    }
+
+    this.el.object3D.position.y = this.data.fixedHeight;
+
+    this.isColliding = collisionOccurred;
+  },
+
+  checkCollision: function(playerPos, target) {
+    const targetPos = target.object3D.position;
+    
+    const horizontalDistance = Math.sqrt(
+      Math.pow(playerPos.x - targetPos.x, 2) + 
+      Math.pow(playerPos.z - targetPos.z, 2)
+    );
+
+    if (target.hasAttribute('collision-box')) {
+      const collisionComp = target.components['collision-box'];
+      const bbox = collisionComp.getBoundingBox();
+      return this.checkBoxCollision(playerPos, targetPos, bbox);
+    }
+    else if (target.hasAttribute('collision-sphere')) {
+      const collisionComp = target.components['collision-sphere'];
+      const sphere = collisionComp.getBoundingSphere();
+      return horizontalDistance < (sphere.radius + this.data.radius);
+    }
+    else {
+      return this.checkStandardCollision(playerPos, target, horizontalDistance);
+    }
+  },
+
+  checkBoxCollision: function(playerPos, boxPos, bbox) {
+    const halfWidth = bbox.width / 2;
+    const halfDepth = bbox.depth / 2;
+
+    return (
+      Math.abs(playerPos.x - boxPos.x) < (halfWidth + this.data.radius) &&
+      Math.abs(playerPos.z - boxPos.z) < (halfDepth + this.data.radius)
+    );
+  },
+
+  checkStandardCollision: function(playerPos, target, horizontalDistance) {
+    const geometry = target.getAttribute('geometry');
+    if (!geometry) return horizontalDistance < (this.data.radius + 0.5);
+
+    let targetRadius = 0.5;
+    
+    switch(geometry.primitive) {
+      case 'box':
+        targetRadius = Math.max(geometry.width, geometry.depth) / 2;
+        break;
+      case 'cylinder':
+        targetRadius = geometry.radius;
+        break;
+      case 'sphere':
+        targetRadius = geometry.radius;
+        break;
+    }
+
+    return horizontalDistance < (targetRadius + this.data.radius);
+  },
+
+  applyCollisionForce: function() {
+    if (this.velocity.length() > 0) {
+      this.velocity.y = 0;
+      this.velocity.multiplyScalar(0.1);
+      
+      this.el.object3D.position.x += this.velocity.x;
+      this.el.object3D.position.z += this.velocity.z;
+      
+      this.el.object3D.position.y = this.data.fixedHeight;
+    }
+  },
+
+  onCollisionStart: function(target) {
+    target.emit('collision-start');
+    
+    if (navigator.vibrate) {
+      navigator.vibrate(50);
+    }
+
+    console.log('Столкновение с:', target, 'Радиус игрока:', this.data.radius);
+    this.el.emit('player-collision-start', {target: target});
+  },
+
+  onCollisionEnd: function(target) {
+    target.emit('collision-end');
+    this.el.emit('player-collision-end', {target: target});
+  }
+});
+</script>
+
+  </body>
+</html>
